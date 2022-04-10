@@ -45,3 +45,14 @@ Route::post('/login',[AuthController::class,'login'])->name('login');
 
                 Route::post('/logout',[AuthController::class,'logout']);
     });
+
+    Route::group(['middleware'=>'jwt.verify'],function(){
+    Route::get('user','AuthController@getUser');
+    Route::get('/posts','PatientController@index');
+                Route::post('/post','PatientController@store');
+                Route::get('/posts/{id}','PatientController@show');
+                Route::put('/posts/{id}','PatientController@update');
+                Route::delete('/posts/{id}','PatientController@destroy');
+
+                Route::post('/logout','PatientController@logout');
+});
